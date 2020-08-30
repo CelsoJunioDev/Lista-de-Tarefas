@@ -11,7 +11,7 @@ class ListaItemModel {
         this.listaTexto = listaTexto
         this.listaData = listaData
     }
-    //monta a criação da tabela
+    //monta a criação da tabelaaaaaa
     companion object{
         val TABLE_NAME = "tarefas_db"
 
