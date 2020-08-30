@@ -13,7 +13,7 @@ class ListaItemModel {
     }
 
     //monta a criação da tabela
-    //monta a criação da tabela
+    //monta a criação da tabelaa
 
     companion object{
         val TABLE_NAME = "tarefas_db"
