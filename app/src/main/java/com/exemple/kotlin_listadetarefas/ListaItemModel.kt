@@ -11,8 +11,7 @@ class ListaItemModel {
         this.listaTexto = listaTexto
         this.listaData = listaData
     }
-    //monta a criação da tabelaaaaaa
-    //monta a criação da tabelaaaaaa
+
     //monta a criação da tabelaaaaaa
 
     companion object{
