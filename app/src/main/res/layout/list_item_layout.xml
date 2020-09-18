@@ -3,10 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clickable="true"
-    android:foreground="?attr/selectableItemBackground">
+    android:foreground="?attr/selectableItemBackground"
+    >
 
     <TextView
         android:id="@+id/dataAtual"
+        android:text="27, fev, 2020"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/layout_margin"
@@ -20,6 +22,7 @@
 
     <TextView
         android:id="@+id/texto"
+        android:text="notas nota nota nota"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/dataAtual"
