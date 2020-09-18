@@ -10,4 +10,8 @@
     <string name="salvar">Salvar</string>
     <string name="cancelar">Cancelar</string>
     <string name="toastTarefa">Adicione uma tarefa!</string>
+    <string name="excluir">Excluir Tarefa</string>
+    <string name="excluirTudo">Excluir todas as tarefas</string>
+    <string name="tituloOpcao">Escolha uma opção</string>
+    <string name="toastErro">Erro ao carregar ação</string>
 </resources>

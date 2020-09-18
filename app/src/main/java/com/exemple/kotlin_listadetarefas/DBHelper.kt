@@ -71,4 +71,18 @@ class DBHelper (context:Context) : SQLiteOpenHelper(context, DB_NAME, null, 1) {
         cursor.close()
         return listaItem
     }
+
+    fun deleteItemLista(listaItemModel: ListaItemModel){
+        val db = this.writableDatabase
+        db.delete(ListaItemModel.TABLE_NAME, ListaItemModel.ID_COLUMN + " = ?",//compara o id do banco
+            // com o id recebido do parametro
+        arrayOf(listaItemModel.listaId.toString()))
+        db.close()
+    }
+    fun deleteTodaLista(){
+        val db = this.writableDatabase
+        db.delete(ListaItemModel.TABLE_NAME, ListaItemModel.ID_COLUMN +" > ?", //pega o id, e se for > 0 ele deleta (TUDO)
+        arrayOf("0"))
+        db.close()
+    }
 }

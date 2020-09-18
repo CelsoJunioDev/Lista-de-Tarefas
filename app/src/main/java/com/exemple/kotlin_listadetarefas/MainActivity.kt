@@ -55,9 +55,51 @@ class MainActivity : AppCompatActivity() {
         recyclerView!!.layoutManager = mLayoutManager
         recyclerView!!.itemAnimator = DefaultItemAnimator()
         recyclerView!!.adapter = mAdapter
+
+        recyclerView!!.addOnItemTouchListener(ItemLongPressListener(this,
+            recyclerView!!, object : ItemLongPressListener.ClickListener{
+                override fun onClick(view: View, position: Int) {}
+
+                override fun onLongClick(view: View?, position: Int) {
+                    showActionsDialog(position)
+                }
+            }
+
+        ))
     }
 
-    private fun showDialog(isUpdate: Boolean, nothing: Nothing?, position: Int) {
+    private fun showActionsDialog(position: Int) {
+        //passa as opções do alertDialog
+        val options = arrayOf<CharSequence>(getString(R.string.editar),
+    getString(R.string.excluir), getString(R.string.excluirTudo))
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.tituloOpcao))
+        builder.setItems(options){dialog, itemIndex ->
+            when(itemIndex){
+                //se a opção clicada for 0 (editar)
+                0 -> showDialog(true, itemsList[position], position)
+                1 -> deletarItemLista(position)
+                2 -> deletarTudo()
+                else -> Toast.makeText(applicationContext, getString(R.string.toastErro), Toast.LENGTH_SHORT).show()
+            }
+            
+        }
+        builder.show()
+    }
+
+    private fun deletarTudo() {
+        db!!.deleteTodaLista() //deleta tudo
+        itemsList.removeAll(itemsList)
+        mAdapter!!.notifyDataSetChanged()
+    }
+
+    private fun deletarItemLista(position: Int) {
+        db!!.deleteItemLista(itemsList[position]) //deleta o item selecionado
+        itemsList.removeAt(position) // retira da lista
+        mAdapter!!.notifyItemRemoved(position) //notifica
+    }
+
+    private fun showDialog(isUpdate: Boolean, listaItemModel: ListaItemModel?, position: Int) {
 
         val layoutInflaterAndroid = LayoutInflater.from(applicationContext)
         //Cria a view do layout
