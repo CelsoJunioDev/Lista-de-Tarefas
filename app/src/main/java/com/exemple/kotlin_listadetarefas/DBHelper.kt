@@ -85,4 +85,13 @@ class DBHelper (context:Context) : SQLiteOpenHelper(context, DB_NAME, null, 1) {
         arrayOf("0"))
         db.close()
     }
+    fun updateItemLista(listaItemModel: ListaItemModel): Int{
+        val db = this.writableDatabase
+        val values = ContentValues()
+        //pega a coluna de texto, edita para o novo texto do item selecionado.
+        values.put(ListaItemModel.TEXT_COLUMN, listaItemModel.listaTexto)
+            // da NOME TABELA, insere o cv, onde o id seja igual ao da nota selecionada.
+        return db.update(ListaItemModel.TABLE_NAME, values, ListaItemModel.ID_COLUMN + " = ?",
+        arrayOf(listaItemModel.listaId.toString()))
+    }
 }

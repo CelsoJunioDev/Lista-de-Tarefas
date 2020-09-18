@@ -6,7 +6,6 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -109,10 +108,14 @@ class MainActivity : AppCompatActivity() {
         val userInput = AlertDialog.Builder(this@MainActivity)
         userInput.setView(view)
 
-        val itemLista = view.findViewById<EditText>(R.id.dialogText)
+        val inputLista = view.findViewById<EditText>(R.id.dialogText)
         val titulo = view.findViewById<TextView>(R.id.dialogTitle)
         titulo.text = if(!isUpdate) getString(R.string.novo) else getString(R.string.editar)
 
+        // SE FOR UMA ATUALIZAÇÃO DE TAREFA, pega o texto da tarefa selecionada
+        if (isUpdate && listaItemModel != null){
+            inputLista.setText(listaItemModel!!.listaTexto)
+        }
         userInput
             .setCancelable(false)
             .setPositiveButton(if(isUpdate) getString(R.string.atualizar)
@@ -123,15 +126,28 @@ class MainActivity : AppCompatActivity() {
         alertDialog.show()
 
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(View.OnClickListener {
-            if (TextUtils.isEmpty(itemLista.text.toString())){
+            if (TextUtils.isEmpty(inputLista.text.toString())){
                 Toast.makeText(this@MainActivity, getString(R.string.toastTarefa), Toast.LENGTH_SHORT).show()
                 return@OnClickListener
             }else {
                 alertDialog.dismiss()
             }
-            createItemLista(itemLista.text.toString())
-
+            //SE FOR UMA ATUALIZAÇÃO, Chama a fun para atualizar. SENÃO, chama o criar normal.
+            if (isUpdate && listaItemModel != null){
+                updateListaItem(inputLista.text.toString(), position)
+            }else {
+                createItemLista(inputLista.text.toString())
+            }
         })
+    }
+
+    private fun updateListaItem(novoListaTexto: String, position: Int) {
+        val item = itemsList[position]
+        item.listaTexto = (novoListaTexto)
+        db!!.updateItemLista(item)
+
+        itemsList[position] = item
+        mAdapter!!.notifyItemChanged(position)
     }
 
     private fun createItemLista(listaText: String) {
